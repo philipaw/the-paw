@@ -1,0 +1,13 @@
+{
+  "name": "the-sauce",
+  "private": true,
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "workspaces": [
+    "modules/*"
+  ],
+  "dependencies": {
+    "lerna": "^3"
+  }
+}
