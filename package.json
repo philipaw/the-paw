@@ -7,6 +7,9 @@
   "workspaces": [
     "modules/*"
   ],
+  "scripts": {
+    "build": "lerna run build"
+  },
   "dependencies": {
     "lerna": "^3"
   },
