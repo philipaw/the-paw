@@ -8,7 +8,8 @@
     "modules/*"
   ],
   "scripts": {
-    "build": "lerna run build"
+    "build": "lerna run build",
+    "start": "lerna run start --parallel --stream --scope @sauce/web --scope @sauce/server"
   },
   "dependencies": {
     "lerna": "^3"
