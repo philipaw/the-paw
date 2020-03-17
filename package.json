@@ -1,5 +1,5 @@
 {
-  "name": "the-sauce",
+  "name": "the-paw",
   "private": true,
   "version": "1.0.0",
   "main": "index.js",
@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "build": "lerna run build",
-    "start": "lerna run start --parallel --stream --scope @sauce/web --scope @sauce/server"
+    "start": "lerna run start --parallel --stream --scope @paw/web --scope @paw/server"
   },
   "dependencies": {
     "lerna": "^3"
