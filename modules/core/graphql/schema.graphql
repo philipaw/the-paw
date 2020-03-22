@@ -2,9 +2,24 @@
 
 # This "Book" type defines the queryable fields for every book in our data source.
 type Book {
-  title: String
   author: String
+  title: String
 }
+
+# interface Authorable {
+#   author: User
+# }
+
+# type Post implements Authorable {
+#   title: String
+#   content: String
+# }
+
+# type User {
+#   id: ID!
+#   email: String!
+#   password: String!
+# }
 
 # The "Query" type is special: it lists all of the available queries that
 # clients can execute, along with the return type for each. In this

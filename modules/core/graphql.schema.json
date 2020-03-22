@@ -39,7 +39,7 @@
         "description": "",
         "fields": [
           {
-            "name": "title",
+            "name": "author",
             "description": "",
             "args": [],
             "type": {
@@ -51,7 +51,7 @@
             "deprecationReason": null
           },
           {
-            "name": "author",
+            "name": "title",
             "description": "",
             "args": [],
             "type": {

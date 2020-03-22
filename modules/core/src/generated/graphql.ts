@@ -12,8 +12,8 @@ export type Scalars = {
 
 export type Book = {
   __typename?: 'Book'
-  title?: Maybe<Scalars['String']>
   author?: Maybe<Scalars['String']>
+  title?: Maybe<Scalars['String']>
 }
 
 export enum CacheControlScope {
@@ -118,8 +118,8 @@ export type BookResolvers<
   ContextType = any,
   ParentType extends ResolversParentTypes['Book'] = ResolversParentTypes['Book']
 > = {
-  title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
   author?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
+  title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>
   __isTypeOf?: isTypeOfResolverFn<ParentType>
 }
 

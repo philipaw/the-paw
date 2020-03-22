@@ -5,7 +5,7 @@ import { Book, typeDefs } from '@paw/core'
 // that together define the "shape" of queries that are executed against
 // your data.
 
-const books = [
+const books: Book[] = [
   {
     title: 'Harry Potter and the Chamber of Secrets',
     author: 'J.K. Rowling',
