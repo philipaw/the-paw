@@ -1,5 +1,5 @@
 import { ApolloServer } from 'apollo-server'
-import { typeDefs } from '@paw/core'
+import { Book, typeDefs } from '@paw/core'
 
 // A schema is a collection of type definitions (hence "typeDefs")
 // that together define the "shape" of queries that are executed against
@@ -18,7 +18,7 @@ const books = [
 
 const resolvers = {
   Query: {
-    books: () => books,
+    books: (): Book[] => books,
   },
 }
 
