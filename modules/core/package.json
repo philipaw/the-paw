@@ -5,14 +5,26 @@
   "typings": "dist/index.d.ts",
   "license": "MIT",
   "dependencies": {
-    "cross-env": "^7"
+    "cross-env": "^7",
+    "graphql-import": "^1.0.1"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^1.13.1",
+    "@graphql-codegen/fragment-matcher": "1.13.1",
+    "@graphql-codegen/introspection": "1.13.1",
+    "@graphql-codegen/typescript": "1.13.1",
+    "@graphql-codegen/typescript-document-nodes": "1.13.1",
+    "@graphql-codegen/typescript-graphql-files-modules": "^1.13.1",
+    "@graphql-codegen/typescript-operations": "1.13.1",
+    "@graphql-codegen/typescript-react-apollo": "1.13.1",
+    "@graphql-codegen/typescript-resolvers": "1.13.1",
     "@types/node": "^13",
+    "graphql": "^14.6.0",
     "typescript": "^3"
   },
   "scripts": {
     "build": "tsc",
-    "build:watch": "tsc --watch"
+    "build:watch": "tsc --watch",
+    "generate": "./node_modules/.bin/graphql-codegen --config codegen.yml"
   }
 }

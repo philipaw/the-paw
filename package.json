@@ -9,7 +9,8 @@
   ],
   "scripts": {
     "build": "lerna run build",
-    "start": "lerna run start --parallel --stream --scope @paw/web --scope @paw/server"
+    "start": "lerna run start --parallel --stream --scope @paw/web --scope @paw/server",
+    "generate": "yarn workspace @paw/core run generate"
   },
   "dependencies": {
     "lerna": "^3"
