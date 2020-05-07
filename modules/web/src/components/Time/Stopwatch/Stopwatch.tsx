@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react'
 
-export const Timer = () => {
+export const Stopwatch = () => {
   const [time, setTime] = useState<number>(0.0)
   const [isTicking, setIsTicking] = useState<boolean>(false)
 
   useEffect(() => {
     if (isTicking) {
-      const timer = setTimeout(() => setTime(time + 0.01), 10)
-      return () => clearTimeout(timer)
+      const stopwatch = setTimeout(() => setTime(time + 0.01), 10)
+      return () => clearTimeout(stopwatch)
     }
   }, [isTicking, setTime, time])
 
