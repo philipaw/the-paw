@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Button } from 'antd'
 
 export const Stopwatch = () => {
   const [time, setTime] = useState<number>(0.0)
@@ -21,9 +22,13 @@ export const Stopwatch = () => {
           setIsTicking(!isTicking)
         }}
       >
-        {isTicking ? 'stop' : 'start'}
+        <Button>{isTicking ? 'stop' : 'start'}</Button>
       </div>
-      {isResetable && <div onClick={() => setTime(0.0)}>reset</div>}
+      {isResetable && (
+        <div onClick={() => setTime(0.0)}>
+          <Button>reset</Button>
+        </div>
+      )}
     </>
   )
 }
