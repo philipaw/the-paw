@@ -1,29 +1,78 @@
 # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
 
-# This "Book" type defines the queryable fields for every book in our data source.
-type Book {
-  author: String
-  title: String
+interface Identifiable {
+  id: ID!
 }
 
-# interface Authorable {
-#   author: User
-# }
+interface Nameable {
+  name: String!
+}
 
-# type Post implements Authorable {
-#   title: String
-#   content: String
-# }
+interface Addressable {
+  line1: String!
+  line2: String
+  city: String!
+  state: String!
+  zipcode: String!
+  country: String!
+}
 
-# type User {
-#   id: ID!
-#   email: String!
-#   password: String!
-# }
+union Mutable = Attribute | Thing | Group | Member | Role | User
+union Immutable = Location
+
+type Action implements Nameable & Identifiable {
+  target: Mutable!
+  success: Mutable!
+  fail: Mutable!
+}
+
+type Location implements Addressable & Nameable & Identifiable {
+  group: Group!
+}
+
+union AttributeValue = Mutable | Immutable | String | Int | Boolean | Upload
+
+type Attribute implements Identifiable {
+  thing: Thing
+  key: String!
+  value: AttributeValue
+}
+
+type Thing implements Nameable & Identifiable {
+  value: number!
+  location: Location!
+  meta: [Attributes]
+}
+
+type Group implements Nameable & Identifiable {
+  members: [Member]
+  locations: [Location!]!
+  shippingLocation: Location!
+  billingLocation: Location!
+}
+
+type Member implements Identifiable {
+  group: Group!
+  role: Role!
+}
+
+type Role implements Nameable & Identifiable {
+  actions: [Action]
+  blacklist: [Actions]
+  whitelist: [Actions]
+}
+
+type User implements Nameable & Identifiable {
+  id: ID!
+  email: String!
+  password: String!
+}
 
 # The "Query" type is special: it lists all of the available queries that
 # clients can execute, along with the return type for each. In this
 # case, the "books" query returns an array of zero or more Books (defined above).
 type Query {
-  books: [Book]
+  users: [User]
+  groups: [Group]
+  things: [Thing]
 }
