@@ -1,28 +1,62 @@
-import { ApolloServer } from 'apollo-server'
-import { Book, typeDefs } from '@paw/core'
+import { ApolloServer, makeExecutableSchema } from 'apollo-server'
+import { Group, Thing, User, typeDefs } from '@paw/core'
 
 // A schema is a collection of type definitions (hence "typeDefs")
 // that together define the "shape" of queries that are executed against
 // your data.
 
-const books: Book[] = [
+const users: User[] = [
   {
-    title: 'Harry Potter and the Chamber of Secrets',
-    author: 'J.K. Rowling',
+    id: '1',
+    email: 'philip@paw.com',
+    name: 'Philip',
+    password: '123',
   },
   {
-    title: 'Jurassic Park',
-    author: 'Michael Crichton',
+    id: '2',
+    email: 'alec@paw.com',
+    name: 'Alec',
+    password: '123',
+  },
+]
+
+const groups: Group[] = [
+  {
+    id: '3',
+    name: 'Bot Lane',
+    members: users,
+  },
+  {
+    id: '4',
+    name: 'Just Philip',
+    members: [users[0]],
+  },
+]
+
+const things: Thing[] = [
+  {
+    id: '5',
+    name: 'T-Shirt',
+    accountValue: 100,
+    meta: [],
   },
 ]
 
 const resolvers = {
   Query: {
-    books: (): Book[] => books,
+    users: (): User[] => users,
+    groups: (): Group[] => groups,
+    things: (): Thing[] => things,
   },
 }
 
-const server = new ApolloServer({ typeDefs, resolvers })
+const schema = makeExecutableSchema({
+  typeDefs,
+  resolvers,
+  resolverValidationOptions: { requireResolversForResolveType: false },
+})
+
+const server = new ApolloServer({ schema })
 
 // The `listen` method launches a web server.
 server.listen().then(({ url }) => {

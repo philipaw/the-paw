@@ -21,49 +21,68 @@ union Mutable = Attribute | Thing | Group | Member | Role | User
 union Immutable = Location
 
 type Action implements Nameable & Identifiable {
+  id: ID!
+  name: String!
   target: Mutable!
   success: Mutable!
   fail: Mutable!
 }
 
 type Location implements Addressable & Nameable & Identifiable {
+  id: ID!
+  name: String!
   group: Group!
+  # addressable
+  line1: String!
+  line2: String
+  city: String!
+  state: String!
+  zipcode: String!
+  country: String!
 }
 
-union AttributeValue = Mutable | Immutable | String | Int | Boolean | Upload
-
 type Attribute implements Identifiable {
+  id: ID!
   thing: Thing
   key: String!
-  value: AttributeValue
+  value: Mutable
 }
 
 type Thing implements Nameable & Identifiable {
-  value: number!
-  location: Location!
-  meta: [Attributes]
+  id: ID!
+  name: String!
+  accountValue: Float!
+  # location: Location!
+  meta: [Attribute]
 }
 
 type Group implements Nameable & Identifiable {
-  members: [Member]
-  locations: [Location!]!
-  shippingLocation: Location!
-  billingLocation: Location!
+  id: ID!
+  name: String!
+  members: [User]
+  # locations: [Location!]!
+  # shippingLocation: Location!
+  # billingLocation: Location!
 }
 
 type Member implements Identifiable {
+  id: ID!
   group: Group!
   role: Role!
+  user: User!
 }
 
 type Role implements Nameable & Identifiable {
+  id: ID!
+  name: String!
   actions: [Action]
-  blacklist: [Actions]
-  whitelist: [Actions]
+  blacklist: [Action]
+  whitelist: [Action]
 }
 
 type User implements Nameable & Identifiable {
   id: ID!
+  name: String!
   email: String!
   password: String!
 }
@@ -75,4 +94,5 @@ type Query {
   users: [User]
   groups: [Group]
   things: [Thing]
+  immutables: [Immutable]
 }
