@@ -42,7 +42,7 @@ export type Group = Nameable & Identifiable & {
    __typename?: 'Group';
   id: Scalars['ID'];
   name: Scalars['String'];
-  members?: Maybe<Array<Maybe<User>>>;
+  members?: Maybe<Array<Maybe<Member>>>;
 };
 
 export type Identifiable = {
@@ -186,18 +186,18 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>,
   User: ResolverTypeWrapper<User>,
-  Nameable: ResolversTypes['User'] | ResolversTypes['Group'] | ResolversTypes['Thing'] | ResolversTypes['Role'] | ResolversTypes['Action'] | ResolversTypes['Location'],
+  Nameable: ResolversTypes['User'] | ResolversTypes['Group'] | ResolversTypes['Role'] | ResolversTypes['Action'] | ResolversTypes['Thing'] | ResolversTypes['Location'],
   String: ResolverTypeWrapper<Scalars['String']>,
-  Identifiable: ResolversTypes['User'] | ResolversTypes['Group'] | ResolversTypes['Thing'] | ResolversTypes['Attribute'] | ResolversTypes['Member'] | ResolversTypes['Role'] | ResolversTypes['Action'] | ResolversTypes['Location'],
+  Identifiable: ResolversTypes['User'] | ResolversTypes['Group'] | ResolversTypes['Member'] | ResolversTypes['Role'] | ResolversTypes['Action'] | ResolversTypes['Attribute'] | ResolversTypes['Thing'] | ResolversTypes['Location'],
   ID: ResolverTypeWrapper<Scalars['ID']>,
   Group: ResolverTypeWrapper<Group>,
-  Thing: ResolverTypeWrapper<Thing>,
-  Float: ResolverTypeWrapper<Scalars['Float']>,
-  Attribute: ResolverTypeWrapper<Omit<Attribute, 'value'> & { value?: Maybe<ResolversTypes['Mutable']> }>,
-  Mutable: ResolversTypes['Attribute'] | ResolversTypes['Thing'] | ResolversTypes['Group'] | ResolversTypes['Member'] | ResolversTypes['Role'] | ResolversTypes['User'],
   Member: ResolverTypeWrapper<Member>,
   Role: ResolverTypeWrapper<Role>,
   Action: ResolverTypeWrapper<Omit<Action, 'target' | 'success' | 'fail'> & { target: ResolversTypes['Mutable'], success: ResolversTypes['Mutable'], fail: ResolversTypes['Mutable'] }>,
+  Mutable: ResolversTypes['Attribute'] | ResolversTypes['Thing'] | ResolversTypes['Group'] | ResolversTypes['Member'] | ResolversTypes['Role'] | ResolversTypes['User'],
+  Attribute: ResolverTypeWrapper<Omit<Attribute, 'value'> & { value?: Maybe<ResolversTypes['Mutable']> }>,
+  Thing: ResolverTypeWrapper<Thing>,
+  Float: ResolverTypeWrapper<Scalars['Float']>,
   Immutable: ResolversTypes['Location'],
   Location: ResolverTypeWrapper<Location>,
   Addressable: ResolversTypes['Location'],
@@ -208,18 +208,18 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   Query: {},
   User: User,
-  Nameable: ResolversParentTypes['User'] | ResolversParentTypes['Group'] | ResolversParentTypes['Thing'] | ResolversParentTypes['Role'] | ResolversParentTypes['Action'] | ResolversParentTypes['Location'],
+  Nameable: ResolversParentTypes['User'] | ResolversParentTypes['Group'] | ResolversParentTypes['Role'] | ResolversParentTypes['Action'] | ResolversParentTypes['Thing'] | ResolversParentTypes['Location'],
   String: Scalars['String'],
-  Identifiable: ResolversParentTypes['User'] | ResolversParentTypes['Group'] | ResolversParentTypes['Thing'] | ResolversParentTypes['Attribute'] | ResolversParentTypes['Member'] | ResolversParentTypes['Role'] | ResolversParentTypes['Action'] | ResolversParentTypes['Location'],
+  Identifiable: ResolversParentTypes['User'] | ResolversParentTypes['Group'] | ResolversParentTypes['Member'] | ResolversParentTypes['Role'] | ResolversParentTypes['Action'] | ResolversParentTypes['Attribute'] | ResolversParentTypes['Thing'] | ResolversParentTypes['Location'],
   ID: Scalars['ID'],
   Group: Group,
-  Thing: Thing,
-  Float: Scalars['Float'],
-  Attribute: Omit<Attribute, 'value'> & { value?: Maybe<ResolversParentTypes['Mutable']> },
-  Mutable: ResolversParentTypes['Attribute'] | ResolversParentTypes['Thing'] | ResolversParentTypes['Group'] | ResolversParentTypes['Member'] | ResolversParentTypes['Role'] | ResolversParentTypes['User'],
   Member: Member,
   Role: Role,
   Action: Omit<Action, 'target' | 'success' | 'fail'> & { target: ResolversParentTypes['Mutable'], success: ResolversParentTypes['Mutable'], fail: ResolversParentTypes['Mutable'] },
+  Mutable: ResolversParentTypes['Attribute'] | ResolversParentTypes['Thing'] | ResolversParentTypes['Group'] | ResolversParentTypes['Member'] | ResolversParentTypes['Role'] | ResolversParentTypes['User'],
+  Attribute: Omit<Attribute, 'value'> & { value?: Maybe<ResolversParentTypes['Mutable']> },
+  Thing: Thing,
+  Float: Scalars['Float'],
   Immutable: ResolversParentTypes['Location'],
   Location: Location,
   Addressable: ResolversParentTypes['Location'],
@@ -256,12 +256,12 @@ export type AttributeResolvers<ContextType = any, ParentType extends ResolversPa
 export type GroupResolvers<ContextType = any, ParentType extends ResolversParentTypes['Group'] = ResolversParentTypes['Group']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
-  members?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>,
+  members?: Resolver<Maybe<Array<Maybe<ResolversTypes['Member']>>>, ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 };
 
 export type IdentifiableResolvers<ContextType = any, ParentType extends ResolversParentTypes['Identifiable'] = ResolversParentTypes['Identifiable']> = {
-  __resolveType: TypeResolveFn<'User' | 'Group' | 'Thing' | 'Attribute' | 'Member' | 'Role' | 'Action' | 'Location', ParentType, ContextType>,
+  __resolveType: TypeResolveFn<'User' | 'Group' | 'Member' | 'Role' | 'Action' | 'Attribute' | 'Thing' | 'Location', ParentType, ContextType>,
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
 };
 
@@ -295,7 +295,7 @@ export type MutableResolvers<ContextType = any, ParentType extends ResolversPare
 };
 
 export type NameableResolvers<ContextType = any, ParentType extends ResolversParentTypes['Nameable'] = ResolversParentTypes['Nameable']> = {
-  __resolveType: TypeResolveFn<'User' | 'Group' | 'Thing' | 'Role' | 'Action' | 'Location', ParentType, ContextType>,
+  __resolveType: TypeResolveFn<'User' | 'Group' | 'Role' | 'Action' | 'Thing' | 'Location', ParentType, ContextType>,
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
 };
 

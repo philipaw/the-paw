@@ -59,7 +59,7 @@ type Thing implements Nameable & Identifiable {
 type Group implements Nameable & Identifiable {
   id: ID!
   name: String!
-  members: [User]
+  members: [Member]
   # locations: [Location!]!
   # shippingLocation: Location!
   # billingLocation: Location!

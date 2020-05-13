@@ -24,12 +24,12 @@ const groups: Group[] = [
   {
     id: '3',
     name: 'Bot Lane',
-    members: users,
+    members: [],
   },
   {
     id: '4',
     name: 'Just Philip',
-    members: [users[0]],
+    members: [],
   },
 ]
 
