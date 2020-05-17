@@ -1,12 +1,12 @@
 import './App.css'
 import React from 'react'
-import { Stopwatch } from './components'
+import { ActivityTimer } from './components'
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <Stopwatch />
+        <ActivityTimer />
       </header>
     </div>
   )
