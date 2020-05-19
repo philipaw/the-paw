@@ -1,1 +1,1 @@
-export * from './EditableLabel'
+export * from './components'
