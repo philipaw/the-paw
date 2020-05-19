@@ -1,0 +1,6 @@
+query AllTimeRecords {
+  id
+  activity
+  time
+  date
+}
