@@ -1,6 +1,5 @@
+#import "./TimeRecordFragment.graphql"
+
 query AllTimeRecords {
-  id
-  activity
-  time
-  date
+  ...TimeRecordFragment
 }

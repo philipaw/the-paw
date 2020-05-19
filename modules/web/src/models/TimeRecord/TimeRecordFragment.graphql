@@ -1,0 +1,6 @@
+fragment TimeRecordFragment on TimeRecord {
+  id
+  activity
+  time
+  date
+}

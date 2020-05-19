@@ -1,6 +1,5 @@
+#import "./TimeRecordFragment.graphql"
+
 mutation CreateTimeRecords($activity: String!, $time: Float!, $date: Int!) {
-  id
-  activity
-  time
-  date
+  ...TimeRecordFragment
 }
