@@ -1,6 +1,6 @@
 import dotenv from 'dotenv'
 import { client } from './database'
-import { ApolloServer, makeExecutableSchema } from 'apollo-server'
+import { ApolloServer } from 'apollo-server'
 import { Group, Thing, User, typeDefs } from '@paw/core'
 import { TimeRecordMutations, TimeRecordQueries } from './resolvers'
 
@@ -10,15 +10,13 @@ if (env.error) {
   throw env.error
 }
 
-export const db = client({
+const dbcli = client({
   user: env?.parsed?.dbuser,
   host: env?.parsed?.host,
   database: env?.parsed?.database,
   password: env?.parsed?.password,
   port: env?.parsed?.port,
 })
-
-db.connect()
 
 const users: User[] = [
   {
@@ -69,15 +67,15 @@ const resolvers = {
   },
 }
 
-const schema = makeExecutableSchema({
+const server = new ApolloServer({
   typeDefs,
   resolvers,
-  resolverValidationOptions: { requireResolversForResolveType: false },
+  context: async () => ({
+    db: await dbcli.connect(),
+  }),
 })
 
-const server = new ApolloServer({ schema })
-
 // The `listen` method launches a web server.
-server.listen().then(({ url }) => {
+server.listen().then(({ url }: { url: string }) => {
   console.log(`🚀  Server ready at ${url}`)
 })

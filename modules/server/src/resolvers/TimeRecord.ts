@@ -1,5 +1,4 @@
 import { v4 } from 'uuid'
-import { db } from '../index'
 import { TimeRecord, Maybe } from '@paw/core'
 
 interface TimeRecordInput {
@@ -9,7 +8,7 @@ interface TimeRecordInput {
 }
 
 export const TimeRecordMutations = {
-  createTimeRecord: ({ activity, time, date }: TimeRecordInput): Maybe<TimeRecord> => {
+  createTimeRecord: (_: any, { activity, time, date }: TimeRecordInput, context: any, __: any): Maybe<TimeRecord> => {
     const newTimeRecord = {
       id: v4(),
       activity,
@@ -17,7 +16,7 @@ export const TimeRecordMutations = {
       date,
     }
     try {
-      db.query(
+      context.db.query(
         'INSERT INTO "TimeRecord" (id, activity, time, date) VALUES ($1, $2, $3, $4)',
         Object.values(newTimeRecord),
       )
@@ -30,9 +29,9 @@ export const TimeRecordMutations = {
 }
 
 export const TimeRecordQueries = {
-  allTimeRecords: async (): Promise<Maybe<[TimeRecord]>> => {
+  allTimeRecords: async (_: any, __: any, context: any, ___: any): Promise<Maybe<[TimeRecord]>> => {
     try {
-      const query = await db.query('SELECT * FROM "TimeRecord"')
+      const query = await context.db.query('SELECT * FROM "TimeRecord"')
       const results = query.rows[0]
       return results
     } catch (error) {
