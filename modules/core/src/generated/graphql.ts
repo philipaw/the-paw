@@ -74,6 +74,11 @@ export type Member = Identifiable & {
 
 export type Mutable = Attribute | Thing | Group | Member | Role | User;
 
+export type Mutation = {
+   __typename?: 'Mutation';
+  createTimeRecord?: Maybe<TimeRecord>;
+};
+
 export type Nameable = {
   name: Scalars['String'];
 };
@@ -84,6 +89,7 @@ export type Query = {
   groups?: Maybe<Array<Maybe<Group>>>;
   things?: Maybe<Array<Maybe<Thing>>>;
   immutables?: Maybe<Array<Maybe<Immutable>>>;
+  allTimeRecords?: Maybe<Array<Maybe<TimeRecord>>>;
 };
 
 export type Role = Nameable & Identifiable & {
@@ -101,6 +107,14 @@ export type Thing = Nameable & Identifiable & {
   name: Scalars['String'];
   accountValue: Scalars['Float'];
   meta?: Maybe<Array<Maybe<Attribute>>>;
+};
+
+export type TimeRecord = Identifiable & {
+   __typename?: 'TimeRecord';
+  id: Scalars['ID'];
+  activity: Scalars['String'];
+  time: Scalars['Float'];
+  date: Scalars['Int'];
 };
 
 export type User = Nameable & Identifiable & {
@@ -188,7 +202,7 @@ export type ResolversTypes = {
   User: ResolverTypeWrapper<User>,
   Nameable: ResolversTypes['User'] | ResolversTypes['Group'] | ResolversTypes['Role'] | ResolversTypes['Action'] | ResolversTypes['Thing'] | ResolversTypes['Location'],
   String: ResolverTypeWrapper<Scalars['String']>,
-  Identifiable: ResolversTypes['User'] | ResolversTypes['Group'] | ResolversTypes['Member'] | ResolversTypes['Role'] | ResolversTypes['Action'] | ResolversTypes['Attribute'] | ResolversTypes['Thing'] | ResolversTypes['Location'],
+  Identifiable: ResolversTypes['User'] | ResolversTypes['Group'] | ResolversTypes['Member'] | ResolversTypes['Role'] | ResolversTypes['Action'] | ResolversTypes['Attribute'] | ResolversTypes['Thing'] | ResolversTypes['Location'] | ResolversTypes['TimeRecord'],
   ID: ResolverTypeWrapper<Scalars['ID']>,
   Group: ResolverTypeWrapper<Group>,
   Member: ResolverTypeWrapper<Member>,
@@ -201,6 +215,9 @@ export type ResolversTypes = {
   Immutable: ResolversTypes['Location'],
   Location: ResolverTypeWrapper<Location>,
   Addressable: ResolversTypes['Location'],
+  TimeRecord: ResolverTypeWrapper<TimeRecord>,
+  Int: ResolverTypeWrapper<Scalars['Int']>,
+  Mutation: ResolverTypeWrapper<{}>,
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>,
 };
 
@@ -210,7 +227,7 @@ export type ResolversParentTypes = {
   User: User,
   Nameable: ResolversParentTypes['User'] | ResolversParentTypes['Group'] | ResolversParentTypes['Role'] | ResolversParentTypes['Action'] | ResolversParentTypes['Thing'] | ResolversParentTypes['Location'],
   String: Scalars['String'],
-  Identifiable: ResolversParentTypes['User'] | ResolversParentTypes['Group'] | ResolversParentTypes['Member'] | ResolversParentTypes['Role'] | ResolversParentTypes['Action'] | ResolversParentTypes['Attribute'] | ResolversParentTypes['Thing'] | ResolversParentTypes['Location'],
+  Identifiable: ResolversParentTypes['User'] | ResolversParentTypes['Group'] | ResolversParentTypes['Member'] | ResolversParentTypes['Role'] | ResolversParentTypes['Action'] | ResolversParentTypes['Attribute'] | ResolversParentTypes['Thing'] | ResolversParentTypes['Location'] | ResolversParentTypes['TimeRecord'],
   ID: Scalars['ID'],
   Group: Group,
   Member: Member,
@@ -223,6 +240,9 @@ export type ResolversParentTypes = {
   Immutable: ResolversParentTypes['Location'],
   Location: Location,
   Addressable: ResolversParentTypes['Location'],
+  TimeRecord: TimeRecord,
+  Int: Scalars['Int'],
+  Mutation: {},
   Boolean: Scalars['Boolean'],
 };
 
@@ -261,7 +281,7 @@ export type GroupResolvers<ContextType = any, ParentType extends ResolversParent
 };
 
 export type IdentifiableResolvers<ContextType = any, ParentType extends ResolversParentTypes['Identifiable'] = ResolversParentTypes['Identifiable']> = {
-  __resolveType: TypeResolveFn<'User' | 'Group' | 'Member' | 'Role' | 'Action' | 'Attribute' | 'Thing' | 'Location', ParentType, ContextType>,
+  __resolveType: TypeResolveFn<'User' | 'Group' | 'Member' | 'Role' | 'Action' | 'Attribute' | 'Thing' | 'Location' | 'TimeRecord', ParentType, ContextType>,
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
 };
 
@@ -294,6 +314,10 @@ export type MutableResolvers<ContextType = any, ParentType extends ResolversPare
   __resolveType: TypeResolveFn<'Attribute' | 'Thing' | 'Group' | 'Member' | 'Role' | 'User', ParentType, ContextType>
 };
 
+export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
+  createTimeRecord?: Resolver<Maybe<ResolversTypes['TimeRecord']>, ParentType, ContextType>,
+};
+
 export type NameableResolvers<ContextType = any, ParentType extends ResolversParentTypes['Nameable'] = ResolversParentTypes['Nameable']> = {
   __resolveType: TypeResolveFn<'User' | 'Group' | 'Role' | 'Action' | 'Thing' | 'Location', ParentType, ContextType>,
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
@@ -304,6 +328,7 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   groups?: Resolver<Maybe<Array<Maybe<ResolversTypes['Group']>>>, ParentType, ContextType>,
   things?: Resolver<Maybe<Array<Maybe<ResolversTypes['Thing']>>>, ParentType, ContextType>,
   immutables?: Resolver<Maybe<Array<Maybe<ResolversTypes['Immutable']>>>, ParentType, ContextType>,
+  allTimeRecords?: Resolver<Maybe<Array<Maybe<ResolversTypes['TimeRecord']>>>, ParentType, ContextType>,
 };
 
 export type RoleResolvers<ContextType = any, ParentType extends ResolversParentTypes['Role'] = ResolversParentTypes['Role']> = {
@@ -320,6 +345,14 @@ export type ThingResolvers<ContextType = any, ParentType extends ResolversParent
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
   accountValue?: Resolver<ResolversTypes['Float'], ParentType, ContextType>,
   meta?: Resolver<Maybe<Array<Maybe<ResolversTypes['Attribute']>>>, ParentType, ContextType>,
+  __isTypeOf?: isTypeOfResolverFn<ParentType>,
+};
+
+export type TimeRecordResolvers<ContextType = any, ParentType extends ResolversParentTypes['TimeRecord'] = ResolversParentTypes['TimeRecord']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>,
+  activity?: Resolver<ResolversTypes['String'], ParentType, ContextType>,
+  time?: Resolver<ResolversTypes['Float'], ParentType, ContextType>,
+  date?: Resolver<ResolversTypes['Int'], ParentType, ContextType>,
   __isTypeOf?: isTypeOfResolverFn<ParentType>,
 };
 
@@ -341,10 +374,12 @@ export type Resolvers<ContextType = any> = {
   Location?: LocationResolvers<ContextType>,
   Member?: MemberResolvers<ContextType>,
   Mutable?: MutableResolvers,
+  Mutation?: MutationResolvers<ContextType>,
   Nameable?: NameableResolvers,
   Query?: QueryResolvers<ContextType>,
   Role?: RoleResolvers<ContextType>,
   Thing?: ThingResolvers<ContextType>,
+  TimeRecord?: TimeRecordResolvers<ContextType>,
   User?: UserResolvers<ContextType>,
 };
 

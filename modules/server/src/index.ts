@@ -1,9 +1,24 @@
+import dotenv from 'dotenv'
+import { client } from './database'
 import { ApolloServer, makeExecutableSchema } from 'apollo-server'
 import { Group, Thing, User, typeDefs } from '@paw/core'
+import { TimeRecordMutations, TimeRecordQueries } from './resolvers'
 
-// A schema is a collection of type definitions (hence "typeDefs")
-// that together define the "shape" of queries that are executed against
-// your data.
+const env = dotenv.config()
+
+if (env.error) {
+  throw env.error
+}
+
+export const db = client({
+  user: env?.parsed?.dbuser,
+  host: env?.parsed?.host,
+  database: env?.parsed?.database,
+  password: env?.parsed?.password,
+  port: env?.parsed?.port,
+})
+
+db.connect()
 
 const users: User[] = [
   {
@@ -47,6 +62,10 @@ const resolvers = {
     users: (): User[] => users,
     groups: (): Group[] => groups,
     things: (): Thing[] => things,
+    ...TimeRecordQueries,
+  },
+  Mutation: {
+    ...TimeRecordMutations,
   },
 }
 

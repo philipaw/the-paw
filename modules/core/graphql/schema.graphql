@@ -56,6 +56,13 @@ type Thing implements Nameable & Identifiable {
   meta: [Attribute]
 }
 
+type TimeRecord implements Identifiable {
+  id: ID!
+  activity: String!
+  time: Float!
+  date: Int!
+}
+
 type Group implements Nameable & Identifiable {
   id: ID!
   name: String!
@@ -95,4 +102,10 @@ type Query {
   groups: [Group]
   things: [Thing]
   immutables: [Immutable]
+
+  allTimeRecords: [TimeRecord]
+}
+
+type Mutation {
+  createTimeRecord: TimeRecord
 }
