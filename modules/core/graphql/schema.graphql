@@ -1,107 +1,107 @@
 # Comments in GraphQL strings (such as this one) start with the hash (#) symbol.
 
-interface Identifiable {
-  id: ID!
-}
+# interface Identifiable {
+#   id: ID!
+# }
 
-interface Nameable {
-  name: String!
-}
+# interface Nameable {
+#   name: String!
+# }
 
-interface Addressable {
-  line1: String!
-  line2: String
-  city: String!
-  state: String!
-  zipcode: String!
-  country: String!
-}
+# interface Addressable {
+#   line1: String!
+#   line2: String
+#   city: String!
+#   state: String!
+#   zipcode: String!
+#   country: String!
+# }
 
-union Mutable = Attribute | Thing | Group | Member | Role | User
-union Immutable = Location
+# union Mutable = Attribute | Thing | Group | Member | Role | User
+# union Immutable = Location
 
-type Action implements Nameable & Identifiable {
-  id: ID!
-  name: String!
-  target: Mutable!
-  success: Mutable!
-  fail: Mutable!
-}
+# type Action implements Nameable & Identifiable {
+#   id: ID!
+#   name: String!
+#   target: Mutable!
+#   success: Mutable!
+#   fail: Mutable!
+# }
 
-type Location implements Addressable & Nameable & Identifiable {
-  id: ID!
-  name: String!
-  group: Group!
-  # addressable
-  line1: String!
-  line2: String
-  city: String!
-  state: String!
-  zipcode: String!
-  country: String!
-}
+# type Location implements Addressable & Nameable & Identifiable {
+#   id: ID!
+#   name: String!
+#   group: Group!
+#   # addressable
+#   line1: String!
+#   line2: String
+#   city: String!
+#   state: String!
+#   zipcode: String!
+#   country: String!
+# }
 
-type Attribute implements Identifiable {
-  id: ID!
-  thing: Thing
-  key: String!
-  value: Mutable
-}
+# type Attribute implements Identifiable {
+#   id: ID!
+#   thing: Thing
+#   key: String!
+#   value: Mutable
+# }
 
-type Thing implements Nameable & Identifiable {
-  id: ID!
-  name: String!
-  accountValue: Float!
-  # location: Location!
-  meta: [Attribute]
-}
+# type Thing implements Nameable & Identifiable {
+#   id: ID!
+#   name: String!
+#   accountValue: Float!
+#   # location: Location!
+#   meta: [Attribute]
+# }
 
-type TimeRecord implements Identifiable {
+type TimeRecord {
   id: ID!
   activity: String!
   time: Float!
   date: Int!
 }
 
-type Group implements Nameable & Identifiable {
-  id: ID!
-  name: String!
-  members: [Member]
-  # locations: [Location!]!
-  # shippingLocation: Location!
-  # billingLocation: Location!
-}
+# type Group implements Nameable & Identifiable {
+#   id: ID!
+#   name: String!
+#   members: [Member]
+#   # locations: [Location!]!
+#   # shippingLocation: Location!
+#   # billingLocation: Location!
+# }
 
-type Member implements Identifiable {
-  id: ID!
-  group: Group!
-  role: Role!
-  user: User!
-}
+# type Member implements Identifiable {
+#   id: ID!
+#   group: Group!
+#   role: Role!
+#   user: User!
+# }
 
-type Role implements Nameable & Identifiable {
-  id: ID!
-  name: String!
-  actions: [Action]
-  blacklist: [Action]
-  whitelist: [Action]
-}
+# type Role implements Nameable & Identifiable {
+#   id: ID!
+#   name: String!
+#   actions: [Action]
+#   blacklist: [Action]
+#   whitelist: [Action]
+# }
 
-type User implements Nameable & Identifiable {
-  id: ID!
-  name: String!
-  email: String!
-  password: String!
-}
+# type User implements Nameable & Identifiable {
+#   id: ID!
+#   name: String!
+#   email: String!
+#   password: String!
+# }
 
 # The "Query" type is special: it lists all of the available queries that
 # clients can execute, along with the return type for each. In this
 # case, the "books" query returns an array of zero or more Books (defined above).
 type Query {
-  users: [User]
-  groups: [Group]
-  things: [Thing]
-  immutables: [Immutable]
+  # users: [User]
+  # groups: [Group]
+  # things: [Thing]
+  # immutables: [Immutable]
 
   allTimeRecords: [TimeRecord]
 }

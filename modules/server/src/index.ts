@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 import { client } from './database'
 import { ApolloServer } from 'apollo-server'
-import { Group, Thing, User, typeDefs } from '@paw/core'
+import { typeDefs } from '@paw/core'
 import { TimeRecordMutations, TimeRecordQueries } from './resolvers'
 
 const env = dotenv.config()
@@ -18,48 +18,8 @@ const dbcli = client({
   port: env?.parsed?.port,
 })
 
-const users: User[] = [
-  {
-    id: '1',
-    email: 'philip@paw.com',
-    name: 'Philip',
-    password: '123',
-  },
-  {
-    id: '2',
-    email: 'alec@paw.com',
-    name: 'Alec',
-    password: '123',
-  },
-]
-
-const groups: Group[] = [
-  {
-    id: '3',
-    name: 'Bot Lane',
-    members: [],
-  },
-  {
-    id: '4',
-    name: 'Just Philip',
-    members: [],
-  },
-]
-
-const things: Thing[] = [
-  {
-    id: '5',
-    name: 'T-Shirt',
-    accountValue: 100,
-    meta: [],
-  },
-]
-
 const resolvers = {
   Query: {
-    users: (): User[] => users,
-    groups: (): Group[] => groups,
-    things: (): Thing[] => things,
     ...TimeRecordQueries,
   },
   Mutation: {
@@ -71,7 +31,7 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context: async () => ({
-    db: await dbcli.connect(),
+    db: dbcli,
   }),
 })
 
